@@ -16,21 +16,18 @@ public class StorageImpl<K, V> implements Storage<K, V> {
 
     @Override
     public void put(K key, V value) {
-        boolean sameKey = true;
-
         for (int i = 0; i < index; i++) {
             if (checkKey(i, key)) {
                 values[i] = value;
-                sameKey = false;
+                return;
             }
         }
 
-        if (sameKey) {
+        if (index != ARRAY_SIZE) {
             keys[index] = key;
             values[index] = value;
             index++;
         }
-
     }
 
     public boolean checkKey(int i, K key) {
